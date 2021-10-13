@@ -1,3 +1,5 @@
+# Databricks notebook source
+
 from pyspark.sql import SparkSession
 from pyspark.sql.types import *
 from datetime import date
@@ -14,15 +16,15 @@ schema = StructType([
 ])
 
 data = [
-    [ 'BLI', date(2021, 4, 3), 52, 43],
-    [ 'BLI', date(2021, 4, 2), 50, 38],
-    [ 'BLI', date(2021, 4, 1), 52, 41],
-    [ 'PDX', date(2021, 4, 3), 64, 45],
-    [ 'PDX', date(2021, 4, 2), 61, 41],
-    [ 'PDX', date(2021, 4, 1), 66, 39],
-    [ 'SEA', date(2021, 4, 3), 57, 43],
-    [ 'SEA', date(2021, 4, 2), 54, 39],
-    [ 'SEA', date(2021, 4, 1), 56, 41]
+    ['BLI', date(2021, 4, 3), 52, 43],
+    ['BLI', date(2021, 4, 2), 50, 38],
+    ['BLI', date(2021, 4, 1), 52, 41],
+    ['PDX', date(2021, 4, 3), 64, 45],
+    ['PDX', date(2021, 4, 2), 61, 41],
+    ['PDX', date(2021, 4, 1), 66, 39],
+    ['SEA', date(2021, 4, 3), 57, 43],
+    ['SEA', date(2021, 4, 2), 54, 39],
+    ['SEA', date(2021, 4, 1), 56, 41]
 ]
 
 temps = spark.createDataFrame(data, schema)
@@ -40,9 +42,9 @@ temps.write.saveAsTable('dbconnect_temp_table')
 # than 2021-04-01. Group the results and order by high
 # temperature in descending order.
 df_temps = spark.sql("SELECT * FROM dbconnect_temp_table " \
-    "WHERE AirportCode != 'BLI' AND Date > '2021-04-01' " \
-    "GROUP BY AirportCode, Date, TempHighF, TempLowF " \
-    "ORDER BY TempHighF DESC")
+                     "WHERE AirportCode != 'BLI' AND Date > '2021-04-01' " \
+                     "GROUP BY AirportCode, Date, TempHighF, TempLowF " \
+                     "ORDER BY TempHighF DESC")
 df_temps.show()
 
 # Results:
@@ -58,3 +60,5 @@ df_temps.show()
 
 # Clean up by deleting the table from the Databricks cluster.
 spark.sql('DROP TABLE dbconnect_temp_table')
+
+# End of Demo
